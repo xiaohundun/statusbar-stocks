@@ -198,6 +198,11 @@ public class StocksWidgetFactory implements StatusBarWidgetFactory {
                             g2.setColor(JBColor.GREEN);
                         }
                       }
+                    if (((BigDecimal) zx).compareTo(((BigDecimal) zs)) >= 0) {
+                        g2.setColor(JBColor.RED);
+                    } else {
+                        g2.setColor(JBColor.GREEN);
+                    }
                     g2.drawString(zx + " ", x, y);
                     x += fm.stringWidth(zx + " ");
                 }
@@ -214,6 +219,12 @@ public class StocksWidgetFactory implements StatusBarWidgetFactory {
                         } else {
                             g2.setColor(foreground);
                         }
+                    if (compareTo > 0) {
+                        g2.setColor(JBColor.RED);
+                    } else if (compareTo < 0) {
+                        g2.setColor(JBColor.GREEN);
+                    } else {
+                        g2.setColor(foreground);
                     }
                     g2.drawString(changeInPercentage + suffix, x, y);
                     x += fm.stringWidth(changeInPercentage + suffix);
