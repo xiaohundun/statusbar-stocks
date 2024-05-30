@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.openapi.wm.StatusBar;
-import com.intellij.openapi.wm.StatusBarWidgetFactory;
 import com.intellij.openapi.wm.WindowManager;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,13 +34,19 @@ public class PluginSettingsConfigurable implements Configurable {
     @Override
     public boolean isModified() {
         AppSettingsState settings = AppSettingsState.getInstance();
-        return !pluginSettingsComponent.getStockCode().equals(settings.stockCode);
+        return !pluginSettingsComponent.getStockCode().equals(settings.stockCode)
+                || !pluginSettingsComponent.getPriceVisible() == settings.priceVisible
+                || !pluginSettingsComponent.getChangePercentageVisible() == settings.changePercentageVisible;
+                || !pluginSettingsComponent.getColorVisible() == settings.colorVisible;
     }
 
     @Override
-    public void apply(){
+    public void apply() {
         AppSettingsState settings = AppSettingsState.getInstance();
-        settings.stockCode = pluginSettingsComponent.getStockCode();
+        settings.stockCode               = pluginSettingsComponent.getStockCode();
+        settings.priceVisible            = pluginSettingsComponent.getPriceVisible();
+        settings.changePercentageVisible = pluginSettingsComponent.getChangePercentageVisible();
+        settings.colorVisible = pluginSettingsComponent.getColorVisible();
         for (Project project : ProjectManager.getInstance().getOpenProjects()) {
             StatusBar statusBar = WindowManager.getInstance().getStatusBar(project);
             if (statusBar != null) {
